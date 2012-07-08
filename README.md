@@ -1,7 +1,3 @@
-Bracer
-
-Java library for parsing and evaluating math expressions.
-
 Features:
 -parse math expressions;
 -evaluate math expressions;
