@@ -14,5 +14,8 @@ Features:
 
 -understands complex numbers.
 
+Javadoc:
+=======
+http://dtitov.github.com/bracer/doc/
 
 P.S. This library depends on Apache Commons Math, so don't forget to include commons-math-2.2.jar to your project.
