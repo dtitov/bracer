@@ -1,4 +1,4 @@
-Except as otherwise noted, this library is licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.html)
+*Except as otherwise noted, this library is licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.html)*
 
 Features:
 =======
@@ -18,4 +18,5 @@ Javadoc:
 =======
 http://dtitov.github.com/bracer/doc/
 
+---
 P.S. This library depends on Apache Commons Math, so don't forget to include commons-math-2.2.jar to your project.
