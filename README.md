@@ -14,9 +14,15 @@ Features:
 
 -understands complex numbers.
 
+Projects that use this library:
+=======
+![CalcuSapiens](https://lh4.ggpht.com/wYgLmF9AKg3wSxOP2PwCSKPrelTQuf-fygZo6-TP-mBJEi3vzmCraiQWooqBy4d_rVqL=w705)
+
 Javadoc:
 =======
 http://dtitov.github.com/bracer/doc/
+
+
 
 ---
 P.S. This library depends on Apache Commons Math, so don't forget to include commons-math-2.2.jar to your project.
