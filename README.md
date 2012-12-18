@@ -18,10 +18,6 @@ Projects that use this library:
 =======
 <a href="https://play.google.com/store/apps/details?id=com.calcu.sapiens.general">![CalcuSapiens](https://lh4.ggpht.com/wYgLmF9AKg3wSxOP2PwCSKPrelTQuf-fygZo6-TP-mBJEi3vzmCraiQWooqBy4d_rVqL=w705 "CalcuSapiens")</a>
 
-Javadoc:
-=======
-http://dtitov.github.com/bracer/doc/
-
 
 
 ---
