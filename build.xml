@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Bracer" default="jar">
+<project name="Bracer" default="test">
     <target name="clean" description="remove intermediate files">
         <delete dir="classes"/>
     </target>
@@ -17,5 +17,9 @@
                 <attribute name="Main-Class" value="BracerParser"/>
             </manifest>
         </jar>
+    </target>
+    <target name="test" description="test">
+        <mkdir dir="classes"/>
+        <javac srcdir="." destdir="classes"/>
     </target>
 </project>
