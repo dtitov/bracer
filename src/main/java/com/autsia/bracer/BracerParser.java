@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package com.github.bracer;
+package com.autsia.bracer;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-import org.apache.commons.math.complex.Complex;
-import org.apache.commons.math.complex.ComplexFormat;
+import org.apache.commons.math3.complex.Complex;
+import org.apache.commons.math3.complex.ComplexFormat;
 
 /**
  * Class for parsing and evaluating math expressions
  * 
  * @author Dmytro Titov
- * @version 0.5.0
+ * @version 0.6.0
  * @since 0.1.0
  */
 public class BracerParser {
@@ -48,7 +49,7 @@ public class BracerParser {
 	/* settings for complex formatting */
 	private ComplexFormat complexFormat = new ComplexFormat(IMAGINARY);
 	/* settings for numbers formatting */
-	private NumberFormat numberFormat = NumberFormat.getInstance();
+	private NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
 	/* temporary stack that holds operators, functions and brackets */
 	private Stack<String> stackOperations = new Stack<String>();
 	/* stack for holding expression converted to reversed polish notation */
@@ -77,8 +78,7 @@ public class BracerParser {
 	public void setPrecision(int precision) {
 		numberFormat.setMinimumFractionDigits(precision);
 		numberFormat.setMaximumFractionDigits(precision);
-		complexFormat.setRealFormat(numberFormat);
-		complexFormat.setImaginaryFormat(numberFormat);
+		complexFormat = new ComplexFormat(IMAGINARY, numberFormat, numberFormat);
 	}
 
 	/**
