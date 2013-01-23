@@ -1,3 +1,5 @@
+[![Build Status](http://3.bp.blogspot.com/-98NG_HGNlxU/UP_RqfDL5II/AAAAAAAAKus/1ErhtS2YzZQ/s200/icon_512.png)](http://bracer.autsia.com)
+
 [![Build Status](https://travis-ci.org/dtitov/bracer.png?branch=master)](https://travis-ci.org/dtitov/bracer)
 
 *Except as otherwise noted, this library is licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.html)*
