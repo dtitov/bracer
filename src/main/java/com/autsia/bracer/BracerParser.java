@@ -30,8 +30,8 @@ import org.apache.commons.math3.complex.ComplexFormat;
  * Class for parsing and evaluating math expressions
  * 
  * @author Dmytro Titov
- * @version 0.6.0
- * @since 0.1.0
+ * @version 6.0
+ * @since 1.0
  */
 public class BracerParser {
 	/* list of available functions */
@@ -62,7 +62,7 @@ public class BracerParser {
 	 * 
 	 * @param precision
 	 *            Number of digits after the dot
-	 * @since 0.2.0
+	 * @since 2.0
 	 */
 	public BracerParser(int precision) {
 		setPrecision(precision);
@@ -73,7 +73,7 @@ public class BracerParser {
 	 * 
 	 * @param precision
 	 *            Number of digits after the dot
-	 * @since 0.2.0
+	 * @since 2.0
 	 */
 	public void setPrecision(int precision) {
 		numberFormat.setMinimumFractionDigits(precision);
@@ -85,7 +85,7 @@ public class BracerParser {
 	 * Get the precision of the real and imaginary parts of numbers
 	 * 
 	 * @return Precision
-	 * @since 0.2.0
+	 * @since 2.0
 	 */
 	public int getPrecision() {
 		return numberFormat.getMinimumFractionDigits();
@@ -98,7 +98,7 @@ public class BracerParser {
 	 *            <code>String</code> input expression (math formula)
 	 * @throws <code>ParseException</code> if the input expression is not
 	 *         correct
-	 * @since 0.3.0
+	 * @since 3.0
 	 */
 	public void parse(String expression) throws ParseException {
 		/* cleaning stacks */
@@ -177,7 +177,7 @@ public class BracerParser {
 	 * @return <code>String</code> representation of the result
 	 * @throws <code>ParseException</code> if the input expression is not
 	 *         correct
-	 * @since 0.1.0
+	 * @since 1.0
 	 */
 	public String evaluate() throws ParseException {
 		if (!stackRPN.contains("var")) {
@@ -194,7 +194,7 @@ public class BracerParser {
 	 * @return <code>String</code> representation of the result
 	 * @throws <code>ParseException</code> if the input expression is not
 	 *         correct
-	 * @since 0.3.0
+	 * @since 3.0
 	 */
 	public String evaluate(double variableValue) throws ParseException {
 		/* check if is there something to evaluate */
@@ -289,7 +289,7 @@ public class BracerParser {
 	 * @return <code>Complex</code> representation of complex number
 	 * @throws <code>ParseException</code> if the input expression is not
 	 *         correct
-	 * @since 0.4.0
+	 * @since 4.0
 	 */
 	public Complex evaluateComplex() throws ParseException {
 		return complexFormat.parse(evaluate());
@@ -303,7 +303,7 @@ public class BracerParser {
 	 * @return <code>Complex</code> representation of complex number
 	 * @throws <code>ParseException</code> if the input expression is not
 	 *         correct
-	 * @since 0.4.0
+	 * @since 4.0
 	 */
 	public Complex evaluateComplex(double variableValue) throws ParseException {
 		return complexFormat.parse(evaluate(variableValue));
@@ -316,7 +316,7 @@ public class BracerParser {
 	 * @param number
 	 *            Input <code>Complex</code> number to convert
 	 * @return <code>String</code> representation of complex number
-	 * @since 0.5.0
+	 * @since 5.0
 	 */
 	public String format(Complex number) {
 		return complexFormat.format(number);
@@ -329,7 +329,7 @@ public class BracerParser {
 	 * @param token
 	 *            Input <code>String</code> token
 	 * @return <code>boolean</code> output
-	 * @since 0.1.0
+	 * @since 1.0
 	 */
 	private boolean isNumber(String token) {
 		try {
@@ -349,7 +349,7 @@ public class BracerParser {
 	 * @param token
 	 *            Input <code>String</code> token
 	 * @return <code>boolean</code> output
-	 * @since 0.1.0
+	 * @since 1.0
 	 */
 	private boolean isFunction(String token) {
 		for (String item : FUNCTIONS) {
@@ -366,7 +366,7 @@ public class BracerParser {
 	 * @param token
 	 *            Input <code>String</code> token
 	 * @return <code>boolean</code> output
-	 * @since 0.1.0
+	 * @since 1.0
 	 */
 	private boolean isSeparator(String token) {
 		return token.equals(SEPARATOR);
@@ -378,7 +378,7 @@ public class BracerParser {
 	 * @param token
 	 *            Input <code>String</code> token
 	 * @return <code>boolean</code> output
-	 * @since 0.1.0
+	 * @since 1.0
 	 */
 	private boolean isOpenBracket(String token) {
 		return token.equals("(");
@@ -390,7 +390,7 @@ public class BracerParser {
 	 * @param token
 	 *            Input <code>String</code> token
 	 * @return <code>boolean</code> output
-	 * @since 0.1.0
+	 * @since 1.0
 	 */
 	private boolean isCloseBracket(String token) {
 		return token.equals(")");
@@ -402,7 +402,7 @@ public class BracerParser {
 	 * @param token
 	 *            Input <code>String</code> token
 	 * @return <code>boolean</code> output
-	 * @since 0.1.0
+	 * @since 1.0
 	 */
 	private boolean isOperator(String token) {
 		return OPERATORS.contains(token);
@@ -414,7 +414,7 @@ public class BracerParser {
 	 * @param token
 	 *            Input <code>String</code> token
 	 * @return <code>byte</code> precedence
-	 * @since 0.1.0
+	 * @since 1.0
 	 */
 	private byte getPrecedence(String token) {
 		if (token.equals("+") || token.equals("-")) {
