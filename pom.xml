@@ -7,6 +7,34 @@
     <groupId>com.autsia.bracer</groupId>
     <artifactId>bracer</artifactId>
     <version>0.6.0</version>
+    <packaging>jar</packaging>
+    
+    <name>bracer</name>
+    <description>Java library for parsing and evaluating math expressions</description>
+    <url>http://bracer.autsia.com/</url>
+    
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    
+    <scm>
+        <url>https://github.com/dtitov/bracer</url>
+        <connection>scm:git:https://github.com/dtitov/bracer.git</connection>
+    </scm>
+    
+    <developers>
+        <developer>
+            <id>owner</id>
+            <name>Dmytro Titov</name>
+            <email>dmytro.titov@gmail.com</email>
+            <timezone>UTC+2</timezone>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>
