@@ -23,7 +23,7 @@
     <scm>
         <url>https://github.com/dtitov/bracer</url>
         <connection>scm:git:git://github.com/dtitov/bracer.git</connection>
-	<developerConnection>scm:git:https://dtitov@github.com/dtitov/bracer.git</developerConnection>
+	<developerConnection>scm:ssh:git@github.com:dtitov/bracer.git</developerConnection>
     </scm>
     
     <developers>
