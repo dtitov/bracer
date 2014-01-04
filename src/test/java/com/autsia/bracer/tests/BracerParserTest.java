@@ -62,4 +62,22 @@ public class BracerParserTest {
     public void testFormat() throws Exception {
         Assert.assertEquals(OUTPUT, bracerParser.format(new Complex(-3.854, 27.017)));
     }
+
+    @Test
+    public void testSimpleBoolean() throws Exception {
+        bracerParser.parse("true or false");
+        Assert.assertEquals("1", bracerParser.evaluate());
+    }
+
+    @Test
+    public void testBoolean() throws Exception {
+        bracerParser.parse("( ( true and ( false or ( true and ( ( true ) or ( false ) ) ) ) ) and ( ( false ) ) )");
+        Assert.assertEquals("0", bracerParser.evaluate());
+    }
+
+    @Test
+    public void testBooleanNot() throws Exception {
+        bracerParser.parse("not( ( true and ( false or ( true and ( not( true ) or ( false ) ) ) ) ) and ( ( false ) ) )");
+        Assert.assertEquals("1", bracerParser.evaluate());
+    }
 }

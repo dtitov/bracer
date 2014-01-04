@@ -37,9 +37,9 @@ public class BracerParser {
 	/* list of available functions */
 	private final String[] FUNCTIONS = { "abs", "acos", "arg", "asin", "atan",
 			"conj", "cos", "cosh", "exp", "imag", "log", "neg", "pow", "real",
-			"sin", "sinh", "sqrt", "tan", "tanh" };
+			"sin", "sinh", "sqrt", "tan", "tanh", "not" };
 	/* list of available operators */
-	private final String OPERATORS = "+-*/";
+	private final String OPERATORS = "+-*/&|!";
 	/* separator of arguments */
 	private final String SEPARATOR = ",";
 	/* imaginary symbol */
@@ -112,7 +112,8 @@ public class BracerParser {
 		expression = expression.replace(" ", "")
 				.replace("°", "*" + Double.toString(Math.PI) + "/180")
 				.replace("(-", "(0-").replace(",-", ",0-").replace("(+", "(0+")
-				.replace(",+", ",0+");
+				.replace(",+", ",0+").replace( "true", "1" ).replace( "false", "0" )
+				.replace( "or", "|" ).replace( "and", "&" );
 		if (expression.charAt(0) == '-' || expression.charAt(0) == '+') {
 			expression = "0" + expression;
 		}
@@ -160,7 +161,7 @@ public class BracerParser {
 			} else if (isFunction(token)) {
 				stackOperations.push(token);
 			} else {
-				throw new ParseException("Unrecognized token", 0);
+				throw new ParseException("Unrecognized token: " + token, 0);
 			}
 		}
 		while (!stackOperations.empty()) {
@@ -221,6 +222,8 @@ public class BracerParser {
 			} else if (isOperator(token)) {
 				Complex a = complexFormat.parse(stackAnswer.pop());
 				Complex b = complexFormat.parse(stackAnswer.pop());
+				boolean aBoolean = a.getReal() == 1.0 ? true : false;
+				boolean bBoolean = b.getReal() == 1.0 ? true : false;
 				if (token.equals("+")) {
 					stackAnswer.push(complexFormat.format(b.add(a)));
 				} else if (token.equals("-")) {
@@ -229,9 +232,14 @@ public class BracerParser {
 					stackAnswer.push(complexFormat.format(b.multiply(a)));
 				} else if (token.equals("/")) {
 					stackAnswer.push(complexFormat.format(b.divide(a)));
+				} else if (token.equals("|")) {
+					stackAnswer.push(String.valueOf( aBoolean || bBoolean ? "1" : "0" ));
+				} else if (token.equals("&")) {
+					stackAnswer.push(String.valueOf( aBoolean && bBoolean ? "1" : "0" ));
 				}
 			} else if (isFunction(token)) {
 				Complex a = complexFormat.parse(stackAnswer.pop());
+				boolean aBoolean = a.getReal() == 1.0 ? true : false;
 				if (token.equals("abs")) {
 					stackAnswer.push(complexFormat.format(a.abs()));
 				} else if (token.equals("acos")) {
@@ -271,6 +279,8 @@ public class BracerParser {
 				} else if (token.equals("pow")) {
 					Complex b = complexFormat.parse(stackAnswer.pop());
 					stackAnswer.push(complexFormat.format(b.pow(a)));
+				} else if (token.equals("not")) {
+					stackAnswer.push(String.valueOf( !aBoolean ? "1" : "0" ));
 				}
 			}
 		}
