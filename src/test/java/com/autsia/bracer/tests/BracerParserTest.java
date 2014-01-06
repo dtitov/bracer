@@ -1,10 +1,14 @@
 package com.autsia.bracer.tests;
 
-import com.autsia.bracer.BracerParser;
+import java.util.Collection;
+
 import org.apache.commons.math3.complex.Complex;
+import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.autsia.bracer.BracerParser;
 
 /**
  * Test class.
@@ -73,11 +77,25 @@ public class BracerParserTest {
     public void testBoolean() throws Exception {
         bracerParser.parse("( ( true and ( false or ( true and ( ( true ) or ( false ) ) ) ) ) and ( ( false ) ) )");
         Assert.assertEquals("0", bracerParser.evaluate());
+
+        Collection< String > stackRPN = bracerParser.getStackRPN();
+        Assert.assertThat(stackRPN,
+            IsIterableContainingInOrder.contains(new String[] {"&", "0", "&", "|", "&", "|", "0", "1", "1", "0", "1"}));
     }
 
     @Test
-    public void testBooleanNot() throws Exception {
+    public void testBooleanNot1() throws Exception {
         bracerParser.parse("not( ( true and ( false or ( true and ( not( true ) or ( false ) ) ) ) ) and ( ( false ) ) )");
         Assert.assertEquals("1", bracerParser.evaluate());
+    }
+
+    @Test
+    public void testBooleanNot2() throws Exception {
+        bracerParser.parse("(((true | false) & not(false)) | (true | false))");
+        Assert.assertEquals("1", bracerParser.evaluate());
+
+        Collection< String > stackRPN = bracerParser.getStackRPN();
+        Assert.assertThat(stackRPN,
+            IsIterableContainingInOrder.contains(new String[] {"|", "|", "0", "1", "&", "not", "0", "|", "0", "1"}));
     }
 }

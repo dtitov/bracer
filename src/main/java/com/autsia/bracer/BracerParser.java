@@ -18,6 +18,7 @@ package com.autsia.bracer;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Stack;
@@ -330,6 +331,13 @@ public class BracerParser {
 	 */
 	public String format(Complex number) {
 		return complexFormat.format(number);
+	}
+
+	/**
+	 * Get back an <b>unmodifiable copy</b> of the stack
+	 */
+	public Collection<String> getStackRPN() {
+		return Collections.unmodifiableCollection(stackRPN);
 	}
 
 	/**
