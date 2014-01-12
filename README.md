@@ -18,6 +18,31 @@ Features:
 
 -understands complex numbers.
 
+Usage:
+=======
+Add the repo to your pom.xml:
+```
+<repositories>
+    <repository>
+        <id>bracer-mvn-repo</id>
+        <url>https://raw.github.com/dtitov/bracer/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+</repositories>
+```
+
+Then add the dependency:
+```
+        <dependency>
+            <groupId>io.github.autsia</groupId>
+            <artifactId>bracer</artifactId>
+            <version>~</version>
+        </dependency>
+```
+
 Projects that use this library:
 =======
 <a href="https://play.google.com/store/apps/details?id=com.calcu.sapiens.general">![CalcuSapiens](https://lh4.ggpht.com/wYgLmF9AKg3wSxOP2PwCSKPrelTQuf-fygZo6-TP-mBJEi3vzmCraiQWooqBy4d_rVqL=w705 "CalcuSapiens")</a>
