@@ -19,7 +19,7 @@ Add the repo to your pom.xml:
 <repositories>
     <repository>
         <id>bracer-mvn-repo</id>
-        <url>https://raw.github.com/autsia/bracer/mvn-repo/</url>
+        <url>https://raw.github.com/dtitov/bracer/mvn-repo/</url>
         <snapshots>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
