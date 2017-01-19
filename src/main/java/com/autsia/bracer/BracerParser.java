@@ -16,25 +16,22 @@
 
 package com.autsia.bracer;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Stack;
-import java.util.StringTokenizer;
-
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.complex.ComplexFormat;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.*;
 
 /**
  * Class for parsing and evaluating math expressions
  *
  * @author Dmytro Titov
- * @version 7.0
+ * @version 7.1
  * @since 1.0
  */
 public class BracerParser {
+
     /* list of available functions */
     private final String[] FUNCTIONS = {"abs", "acos", "arg", "asin", "atan",
             "conj", "cos", "cosh", "exp", "imag", "log", "neg", "pow", "real",
@@ -94,8 +91,7 @@ public class BracerParser {
      * Parses the math expression (complicated formula) and stores the result
      *
      * @param expression <code>String</code> input expression (math formula)
-     * @throws <code>ParseException</code> if the input expression is not
-     *                                     correct
+     * @throws ParseException if the input expression is not correct
      * @since 3.0
      */
     public void parse(String expression) throws ParseException {
@@ -104,7 +100,7 @@ public class BracerParser {
         stackRPN.clear();
 
 		/*
-		 * make some preparations: remove spaces; handle unary + and -, handle
+         * make some preparations: remove spaces; handle unary + and -, handle
 		 * degree character
 		 */
         expression = expression.replace(" ", "")
@@ -115,44 +111,38 @@ public class BracerParser {
         if (expression.charAt(0) == '-' || expression.charAt(0) == '+') {
             expression = "0" + expression;
         }
-		/* splitting input string into tokens */
-        StringTokenizer stringTokenizer = new StringTokenizer(expression,
-                OPERATORS + SEPARATOR + "()", true);
+        /* splitting input string into tokens */
+        StringTokenizer stringTokenizer = new StringTokenizer(expression, OPERATORS + SEPARATOR + "()", true);
 
 		/* loop for handling each token - shunting-yard algorithm */
         while (stringTokenizer.hasMoreTokens()) {
             String token = stringTokenizer.nextToken();
             if (isSeparator(token)) {
-                while (!stackOperations.empty()
-                        && !isOpenBracket(stackOperations.lastElement())) {
+                while (!stackOperations.empty() && !isOpenBracket(stackOperations.lastElement())) {
                     stackRPN.push(stackOperations.pop());
                 }
             } else if (isOpenBracket(token)) {
                 stackOperations.push(token);
             } else if (isCloseBracket(token)) {
-                while (!stackOperations.empty()
-                        && !isOpenBracket(stackOperations.lastElement())) {
+                while (!stackOperations.empty() && !isOpenBracket(stackOperations.lastElement())) {
                     stackRPN.push(stackOperations.pop());
                 }
                 stackOperations.pop();
-                if (!stackOperations.empty()
-                        && isFunction(stackOperations.lastElement())) {
+                if (!stackOperations.empty() && isFunction(stackOperations.lastElement())) {
                     stackRPN.push(stackOperations.pop());
                 }
             } else if (isNumber(token)) {
                 if (token.equals(IMAGINARY)) {
                     stackRPN.push(complexFormat.format(new Complex(0, 1)));
                 } else if (token.contains(IMAGINARY)) {
-                    stackRPN.push(complexFormat.format(complexFormat.parse("0+"
-                            + token)));
+                    stackRPN.push(complexFormat.format(complexFormat.parse("0+" + token)));
                 } else {
                     stackRPN.push(token);
                 }
             } else if (isOperator(token)) {
                 while (!stackOperations.empty()
                         && isOperator(stackOperations.lastElement())
-                        && getPrecedence(token) <= getPrecedence(stackOperations
-                        .lastElement())) {
+                        && getPrecedence(token) <= getPrecedence(stackOperations.lastElement())) {
                     stackRPN.push(stackOperations.pop());
                 }
                 stackOperations.push(token);
@@ -174,8 +164,7 @@ public class BracerParser {
      * Evaluates once parsed math expression with no variable included
      *
      * @return <code>String</code> representation of the result
-     * @throws <code>ParseException</code> if the input expression is not
-     *                                     correct
+     * @throws ParseException if the input expression is not correct
      * @since 1.0
      */
     public String evaluate() throws ParseException {
@@ -190,17 +179,15 @@ public class BracerParser {
      *
      * @param variableValue User-specified <code>Double</code> value
      * @return <code>String</code> representation of the result
-     * @throws <code>ParseException</code> if the input expression is not
-     *                                     correct
+     * @throws ParseException if the input expression is not correct
      * @since 3.0
      */
     public String evaluate(double variableValue) throws ParseException {
-		/* check if is there something to evaluate */
+        /* check if is there something to evaluate */
         if (stackRPN.empty()) {
             return "";
         }
-
-		/* clean answer stack */
+        /* clean answer stack */
         stackAnswer.clear();
 
 		/* get the clone of the RPN stack for further evaluating */
@@ -208,8 +195,7 @@ public class BracerParser {
         Stack<String> stackRPN = (Stack<String>) this.stackRPN.clone();
 
 		/* enroll the variable value into expression */
-        Collections.replaceAll(stackRPN, VARIABLE,
-                Double.toString(variableValue));
+        Collections.replaceAll(stackRPN, VARIABLE, Double.toString(variableValue));
 
 		/* evaluating the RPN expression */
         while (!stackRPN.empty()) {
@@ -217,10 +203,10 @@ public class BracerParser {
             if (isNumber(token)) {
                 stackAnswer.push(token);
             } else if (isOperator(token)) {
-                Complex a = complexFormat.parse(stackAnswer.pop());
-                Complex b = complexFormat.parse(stackAnswer.pop());
-                boolean aBoolean = a.getReal() == 1.0;
-                boolean bBoolean = b.getReal() == 1.0;
+                Complex a = stackAnswer.isEmpty() ? null : complexFormat.parse(stackAnswer.pop());
+                Complex b = stackAnswer.isEmpty() ? null : complexFormat.parse(stackAnswer.pop());
+                boolean aBoolean = a != null && a.getReal() == 1.0;
+                boolean bBoolean = b != null && b.getReal() == 1.0;
                 switch (token) {
                     case "+":
                         stackAnswer.push(complexFormat.format(b.add(a)));
@@ -239,6 +225,9 @@ public class BracerParser {
                         break;
                     case "&":
                         stackAnswer.push(String.valueOf(aBoolean && bBoolean ? "1" : "0"));
+                        break;
+                    case "!":
+                        stackAnswer.push(String.valueOf(!aBoolean ? "1" : "0"));
                         break;
                 }
             } else if (isFunction(token)) {
@@ -322,8 +311,7 @@ public class BracerParser {
      * object
      *
      * @return <code>Complex</code> representation of complex number
-     * @throws <code>ParseException</code> if the input expression is not
-     *                                     correct
+     * @throws ParseException if the input expression is not correct
      * @since 4.0
      */
     public Complex evaluateComplex() throws ParseException {
@@ -335,8 +323,7 @@ public class BracerParser {
      *
      * @param variableValue User-specified <code>Double</code> value
      * @return <code>Complex</code> representation of complex number
-     * @throws <code>ParseException</code> if the input expression is not
-     *                                     correct
+     * @throws ParseException if the input expression is not correct
      * @since 4.0
      */
     public Complex evaluateComplex(double variableValue) throws ParseException {
@@ -357,6 +344,8 @@ public class BracerParser {
 
     /**
      * Get back an <b>unmodifiable copy</b> of the stack
+     *
+     * @return Immutable copy of the stack
      */
     public Collection<String> getStackRPN() {
         return Collections.unmodifiableCollection(stackRPN);
@@ -452,4 +441,5 @@ public class BracerParser {
         }
         return 2;
     }
+
 }

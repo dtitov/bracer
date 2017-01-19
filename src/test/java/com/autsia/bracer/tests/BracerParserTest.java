@@ -16,15 +16,14 @@
 
 package com.autsia.bracer.tests;
 
-import java.util.Collection;
-
+import com.autsia.bracer.BracerParser;
 import org.apache.commons.math3.complex.Complex;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.autsia.bracer.BracerParser;
+import java.util.Collection;
 
 /**
  * Test class.
@@ -33,6 +32,7 @@ import com.autsia.bracer.BracerParser;
  * Time: 12:52
  */
 public class BracerParserTest {
+
     private final String INPUT_NOVAR = "-sin(3+4I+cosh(6*I)/exp(10/pow(22,-1)))";
     private final String INPUT_VAR = "-sin(3+var*I+cosh(10*I)/exp(10/pow(22,-1)))";
     private final String OUTPUT = "-3.854 + 27.017I";
@@ -95,8 +95,7 @@ public class BracerParserTest {
         Assert.assertEquals("0", bracerParser.evaluate());
 
         Collection<String> stackRPN = bracerParser.getStackRPN();
-        Assert.assertThat(stackRPN,
-                IsIterableContainingInOrder.contains("&", "0", "&", "|", "&", "|", "0", "1", "1", "0", "1"));
+        Assert.assertThat(stackRPN, IsIterableContainingInOrder.contains("&", "0", "&", "|", "&", "|", "0", "1", "1", "0", "1"));
     }
 
     @Test
@@ -111,7 +110,13 @@ public class BracerParserTest {
         Assert.assertEquals("1", bracerParser.evaluate());
 
         Collection<String> stackRPN = bracerParser.getStackRPN();
-        Assert.assertThat(stackRPN,
-                IsIterableContainingInOrder.contains("|", "|", "0", "1", "&", "not", "0", "|", "0", "1"));
+        Assert.assertThat(stackRPN, IsIterableContainingInOrder.contains("|", "|", "0", "1", "&", "not", "0", "|", "0", "1"));
     }
+
+    @Test
+    public void testUnaryNot() throws Exception {
+        bracerParser.parse("(! (false))");
+        Assert.assertEquals("1", bracerParser.evaluate());
+    }
+
 }
