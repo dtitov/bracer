@@ -1,16 +1,11 @@
 Features:
 =======
--parse math expressions;
-
--evaluate math expressions;
-
--convert from infix to postfix notation;
-
--calculate expression in postfix notation;
-
--implements the shunting-yard algorithm;
-
--understands complex numbers.
+- parse math expressions;
+- evaluate math expressions;
+- convert from infix to postfix notation;
+- calculate expression in postfix notation;
+- implements the shunting-yard algorithm;
+- understands complex numbers.
 
 Usage:
 =======
